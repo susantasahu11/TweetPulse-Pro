@@ -51,7 +51,8 @@ def main():
     mongodb_port = int(os.environ.get('MONGODB_PORT', config.get('mongodb_port', 27017)))
     mongodb_db = config.get('mongodb_db', 'bigdata_project')
     mongodb_collection = config.get('mongodb_collection', 'tweets')
-    model_path = config.get('model_path', 'logistic_regression_model.pkl')
+    # Allow overriding model path via env; default to mounted /app/logistic_regression_model.pkl
+    model_path = os.environ.get('MODEL_PATH', config.get('model_path', 'logistic_regression_model.pkl'))
 
     # Download nltk data silently
     nltk.download('stopwords', quiet=True)
@@ -64,7 +65,11 @@ def main():
 
     # Initialize Spark Session and load ML pipeline model
     spark = SparkSession.builder.appName("classify tweets").getOrCreate()
-    pipeline = PipelineModel.load(model_path)
+    try:
+        pipeline = PipelineModel.load(model_path)
+    except Exception as e:
+        logging.error(f"Failed to load Spark Pipeline model from '{model_path}': {e}")
+        sys.exit(1)
 
     # Mapping predicted label indices to names
     class_index_mapping = {0: "Negative", 1: "Positive", 2: "Neutral", 3: "Irrelevant"}

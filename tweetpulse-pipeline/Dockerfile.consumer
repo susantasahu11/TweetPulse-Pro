@@ -8,7 +8,7 @@ FROM python:3.10-slim
 WORKDIR /app
 COPY consumer-pyspark.py ./
 COPY consumer_config.yaml ./
-COPY logistic_regression_model.pkl ./logistic_regression_model.pkl
+# Model is mounted at runtime; keep image generic so CI builds without repo model artifacts
 RUN apt-get update && apt-get install -y openjdk-21-jre-headless && rm -rf /var/lib/apt/lists/* \
 	&& pip install --default-timeout=600 kafka-python pyyaml pymongo pyspark nltk findspark numpy
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
