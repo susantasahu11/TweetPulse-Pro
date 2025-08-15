@@ -5,8 +5,8 @@
 # Description: Dockerfile for Python Kafka producer service.
 FROM python:3.10-slim
 WORKDIR /app
-COPY producer-validation-tweets.py ./
+COPY kafka_producer.py ./
 COPY producer_config.yaml ./
 COPY twitter_validation.csv ./
 RUN pip install --default-timeout=600 kafka-python pyyaml
-CMD ["python", "producer-validation-tweets.py"]
+CMD ["python", "kafka_producer.py"]

@@ -6,7 +6,7 @@
 # Dockerfile for Kafka Consumer (PySpark)
 FROM python:3.10-slim
 WORKDIR /app
-COPY consumer-pyspark.py ./
+COPY kafka_spark_consumer.py ./
 COPY consumer_config.yaml ./
 # Model is mounted at runtime; keep image generic so CI builds without repo model artifacts
 RUN apt-get update && apt-get install -y openjdk-21-jre-headless && rm -rf /var/lib/apt/lists/* \
@@ -14,4 +14,4 @@ RUN apt-get update && apt-get install -y openjdk-21-jre-headless && rm -rf /var/
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 ENV PATH="$JAVA_HOME/bin:$PATH"
 ENV NLTK_DATA=/usr/local/share/nltk_data
-CMD ["python", "consumer-pyspark.py"]
+CMD ["python", "kafka_spark_consumer.py"]

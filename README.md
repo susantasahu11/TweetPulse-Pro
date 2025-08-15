@@ -55,8 +55,8 @@ Real-Time-Twitter-Sentiment-Analysis/
 │   ├── templates/              # HTML templates
 │   └── logistic_regression_model.pkl/  # Model for dashboard
 ├── tweetpulse-pipeline/        # Kafka producer & Spark consumer (YAML-configurable)
-│   ├── producer-validation-tweets.py
-│   ├── consumer-pyspark.py
+│   ├── kafka_producer.py
+│   ├── kafka_spark_consumer.py
 │   ├── producer_config.yaml
 │   ├── consumer_config.yaml
 │   ├── analytics_api.py        # Flask REST API for analytics
@@ -157,13 +157,13 @@ This will launch:
 - Edit `tweetpulse-pipeline/producer_config.yaml` and `consumer_config.yaml` as needed.
 - Run producer:
   ```powershell
-  python tweetpulse-pipeline/producer-validation-tweets.py --config tweetpulse-pipeline/producer_config.yaml
+  python tweetpulse-pipeline/kafka_producer.py --config tweetpulse-pipeline/producer_config.yaml
   ```
 - Run consumer:
   ```powershell
   $env:JAVA_HOME = "C:\\Program Files\\Java\\jdk-17"  # adjust if needed
   $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
-  python tweetpulse-pipeline/consumer-pyspark.py --config tweetpulse-pipeline/consumer_config.yaml
+  python tweetpulse-pipeline/kafka_spark_consumer.py --config tweetpulse-pipeline/consumer_config.yaml
   ```
 
 
