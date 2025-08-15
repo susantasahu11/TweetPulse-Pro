@@ -1,0 +1,278 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}TweetPulse Pro - Real-Time Analytics Dashboard{% endblock %}
+
+{% block links %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+{% endblock links %}
+
+{% block content %}
+<section class="hero">
+  <div class="container fade-in">
+    <h1>TweetPulse Pro</h1>
+    <p>Ultra-fast, accurate real-time Twitter sentiment analysis with advanced AI.</p>
+    <div class="d-flex justify-content-center gap-2 mt-3">
+      <a href="{% url 'classify' %}" class="btn btn-gradient"><i class="fa-solid fa-wand-magic-sparkles"></i> Try Classifier</a>
+      <a href="{% url 'login' %}" class="btn btn-light">Login</a>
+      <a href="{% url 'register' %}" class="btn btn-outline-light">Register</a>
+    </div>
+  </div>
+</section>
+
+<div class="container py-4">
+  <h2 class="mb-4 text-white">Live Insights</h2>
+
+  <!-- Tweet Submission Form -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+  <div class="card card-hover">
+    <div class="card-header text-white" style="background: linear-gradient(135deg,#1f2937,#111827)">Submit Your Own Tweet for Analysis</div>
+        <div class="card-body">
+          <form method="post" class="row g-2">
+            {% csrf_token %}
+            <div class="col-12">
+              <textarea name="tweet_text" class="form-control" rows="2" placeholder="Type your tweet here...">{{ request.POST.tweet_text }}</textarea>
+            </div>
+            <div class="col-12">
+      <button type="submit" class="btn btn-gradient w-100">Analyze Tweet</button>
+            </div>
+          </form>
+          {% if tweet_result %}
+            <div class="alert alert-success mt-3" role="alert">
+              <strong>Sentiment:</strong> {{ tweet_result }}
+              {% if classification_time %}
+                <small class="text-muted">(Classified in {{ classification_time }})</small>
+              {% endif %}
+            </div>
+          {% elif tweet_error %}
+            <div class="alert alert-danger mt-3" role="alert">
+              {{ tweet_error }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analysis History Section -->
+  {% if analysis_history %}
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card card-hover">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, var(--brand), var(--brand-2))">
+          <i class="fa-solid fa-history"></i> Your Analysis History
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Text Analyzed</th>
+                <th>Predicted Sentiment</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in analysis_history %}
+              <tr>
+                <td style="max-width: 300px; word-wrap: break-word;">{{ item.original_text|truncatechars:100 }}</td>
+                <td>
+                  <span class="badge 
+                    {% if item.prediction == 'Positive' %}bg-success
+                    {% elif item.prediction == 'Negative' %}bg-danger
+                    {% elif item.prediction == 'Neutral' %}bg-secondary
+                    {% else %}bg-warning{% endif %}">
+                    {{ item.prediction }}
+                  </span>
+                </td>
+                <td><small>{{ item.timestamp|date:"M d, H:i" }}</small></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if len_data != 0 %}
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card card-hover">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, var(--brand-2), var(--brand))">Recent Tweets</div>
+        <div class="card-body p-0">
+          <table class="table table-striped mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Text</th>
+                <th>Sentiment</th>
+                <th>User</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in recent_tweets %}
+              <tr>
+                <td style="max-width: 250px; word-wrap: break-word;">{{ item.tweet|truncatechars:80 }}</td>
+                <td>
+                  <span class="badge 
+                    {% if item.prediction == 'Positive' %}bg-success
+                    {% elif item.prediction == 'Negative' %}bg-danger
+                    {% elif item.prediction == 'Neutral' %}bg-secondary
+                    {% else %}bg-warning{% endif %}">
+                    {{ item.prediction }}
+                  </span>
+                </td>
+                <td><small>{{ item.user|default:"Unknown" }}</small></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card card-hover mb-4">
+        <div class="card-header text-white" style="background: linear-gradient(135deg,#22c55e,#16a34a)">Sentiment Distribution</div>
+        <div class="card-body">
+          <canvas id="sentimentPieChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card card-hover mb-4">
+        <div class="card-header text-white" style="background: linear-gradient(135deg,#06b6d4,#0891b2)">Sentiment Over Time</div>
+        <div class="card-body">
+          <canvas id="sentimentTimeSeries"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card card-hover mb-4">
+        <div class="card-header text-dark" style="background: linear-gradient(135deg,#fde68a,#f59e0b)">Top Keywords</div>
+        <div class="card-body">
+          <canvas id="topKeywordsChart" height="250"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card card-hover mb-4">
+        <div class="card-header text-white" style="background: linear-gradient(135deg,#64748b,#334155)">User Statistics</div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Total Tweets <span class="badge bg-primary rounded-pill">{{ len_data }}</span>
+            </li>
+            {% for user, count in top_users %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ user }} <span class="badge bg-info rounded-pill">{{ count }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+  <div class="alert alert-warning text-center" role="alert">
+    <strong>The database is empty!</strong>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/script.js' %}"></script>
+<script>
+  // Pie Chart for Sentiment Distribution
+  // Prefer JSON pre-encoded by the backend to avoid quoting issues
+  var sentimentCounts = {};
+  try { sentimentCounts = JSON.parse('{{ sentiment_counts_json|default:sentiment_counts|escapejs }}'); } catch (e) { try { sentimentCounts = JSON.parse('{{ sentiment_counts|escapejs }}'); } catch (e2) { sentimentCounts = {}; } }
+  var pieLabels = Object.keys(sentimentCounts);
+  var pieData = Object.values(sentimentCounts);
+  var pieColors = [
+    'rgba(54, 162, 235, 0.7)', // blue
+    'rgba(255, 206, 86, 0.7)', // yellow
+    'rgba(255, 99, 132, 0.7)', // red
+    'rgba(75, 192, 192, 0.7)'  // teal
+  ];
+  var pieEl = document.getElementById('sentimentPieChart');
+  if (pieEl) {
+    var ctxPie = pieEl.getContext('2d');
+    new Chart(ctxPie, {
+    type: 'pie',
+    data: {
+      labels: pieLabels,
+      datasets: [{
+        data: pieData,
+        backgroundColor: pieColors,
+      }]
+    },
+    options: {
+      plugins: { legend: { position: 'bottom' } }
+    }
+    });
+  }
+
+  // Time Series Chart for Sentiment Trends
+  // Prefer pre-encoded JSON for time series
+  var timeSeries = {};
+  try { timeSeries = JSON.parse('{{ time_series_json|default:time_series|escapejs }}'); } catch (e) { try { timeSeries = JSON.parse('{{ time_series|escapejs }}'); } catch (e2) { timeSeries = {}; } }
+  var tsEl = document.getElementById('sentimentTimeSeries');
+  if (tsEl && timeSeries && timeSeries.labels && timeSeries.datasets) {
+    var ctxTime = tsEl.getContext('2d');
+    new Chart(ctxTime, {
+      type: 'line',
+      data: {
+        labels: timeSeries.labels,
+        datasets: timeSeries.datasets
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+  }
+
+  // Top Keywords Bar Chart
+  (function(){
+    var el = document.getElementById('topKeywordsChart');
+    if (!el) return;
+    var labels = [];
+    var counts = [];
+    try {
+      labels = JSON.parse('{{ top_words_labels_json|default:"[]"|escapejs }}');
+      counts = JSON.parse('{{ top_words_counts_json|default:"[]"|escapejs }}');
+    } catch (e) { labels = []; counts = []; }
+    if (labels.length && counts.length) {
+      new Chart(el.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Keyword Frequency',
+            data: counts,
+            backgroundColor: 'rgba(245, 158, 11, 0.6)',
+            borderColor: 'rgba(245, 158, 11, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+  })();
+</script>
+{% endblock scripts %}

@@ -1,0 +1,12 @@
+# Dockerfile for Kafka Producer
+# TweetPulse Pro - Kafka Producer Dockerfile
+# Author: Manula Fernando
+# Updated: July 23, 2025
+# Description: Dockerfile for Python Kafka producer service.
+FROM python:3.10-slim
+WORKDIR /app
+COPY producer-validation-tweets.py ./
+COPY producer_config.yaml ./
+COPY twitter_validation.csv ./
+RUN pip install --default-timeout=600 kafka-python pyyaml
+CMD ["python", "producer-validation-tweets.py"]

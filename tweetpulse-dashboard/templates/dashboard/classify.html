@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI Classifier | TweetPulse Pro{% endblock title %}
+
+
+{% block links %}
+    <!-- <link rel="stylesheet" href="{% static 'css/css-reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/myCss-fm.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock links %}
+
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card card-hover">
+                <div class="card-header text-white" style="background: linear-gradient(135deg,#7c3aed,#20c997)">Classify Text</div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" class="row g-3">
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <textarea class="form-control" placeholder="Enter your text" name="text" rows="4"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-gradient">Classify</button>
+                        </div>
+                    </form>
+                    <div class="mt-3">
+                        {% if text_len > 0 or error %}
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error_text }}</div>
+                            {% else %}
+                                <ul class="list-group">
+                                    <li class="list-group-item"><strong>Text:</strong> {{ text }}</li>
+                                    <li class="list-group-item"><strong>Prediction:</strong> <span class="badge bg-primary">{{ prediction }}</span></li>
+                                </ul>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock scripts %}

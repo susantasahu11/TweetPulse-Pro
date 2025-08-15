@@ -1,0 +1,10 @@
+# Dockerfile for Analytics REST API
+# TweetPulse Pro - Analytics API Dockerfile
+# Author: Manula Fernando
+# Updated: July 23, 2025
+# Description: Dockerfile for Flask analytics REST API service.
+FROM python:3.10-slim
+WORKDIR /app
+COPY analytics_api.py ./
+RUN pip install flask flask-cors pymongo
+CMD ["python", "analytics_api.py"]

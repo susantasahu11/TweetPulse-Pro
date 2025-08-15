@@ -1,0 +1,14 @@
+# Consumer configuration file
+# TweetPulse Pro - Kafka Consumer Config
+# Author: Manula Fernando
+# Updated: July 23, 2025
+# YAML configuration for the Spark consumer. Edit these values as needed.
+
+kafka_topic: 'numtest'
+kafka_bootstrap_servers: 'localhost:9092'
+kafka_group_id: 'my-group'
+mongodb_host: 'localhost'
+mongodb_port: 27017
+mongodb_db: 'bigdata_project'
+mongodb_collection: 'tweets'
+model_path: 'logistic_regression_model.pkl'

@@ -1,0 +1,23 @@
+# TweetPulse Pro - Django Dashboard Dockerfile
+# Author: Manula Fernando
+# Updated: July 23, 2025
+# Description: Dockerfile for Django dashboard service.
+FROM python:3.10-slim
+WORKDIR /app
+# Install Java for PySpark when classifying via Spark pipeline
+RUN apt-get update && apt-get install -y openjdk-21-jre-headless && rm -rf /var/lib/apt/lists/*
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH="$JAVA_HOME/bin:$PATH"
+
+# Build context is repo root (set in docker-compose), so copy requirements from root
+COPY requirements.txt /tmp/requirements.txt
+# Upgrade pip tooling first to avoid hash/metadata issues, then install deps
+RUN python -m pip install --no-cache-dir --upgrade pip setuptools wheel \
+	&& pip install --no-cache-dir -r /tmp/requirements.txt
+
+# Copy only the Django project directory into /app
+COPY tweetpulse-dashboard/ /app/
+
+# Collect static at runtime in compose command
+EXPOSE 8000
+CMD ["bash", "-lc", "python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"]

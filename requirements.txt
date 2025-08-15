@@ -1,0 +1,18 @@
+# TweetPulse Pro - Python Requirements
+# Author: Manula Fernando
+# Updated: July 23, 2025
+# Description: Python dependencies for all services (Django, Spark, Kafka, MongoDB, analytics, dashboard).
+
+Django==5.0.6
+matplotlib==3.8.3
+nltk==3.8.1
+pandas==2.2.2
+pymongo==3.12.1
+pyspark==3.5.1
+seaborn==0.13.2
+flask==3.0.3
+flask-cors==4.0.1
+kafka-python==2.0.2
+PyYAML==6.0.1
+findspark==2.0.1
+numpy==1.26.4

@@ -1,0 +1,11 @@
+# Producer configuration file
+# TweetPulse Pro - Kafka Producer Config
+# Author: Manula Fernando
+# Updated: July 23, 2025
+# YAML configuration for the Kafka tweet producer. Edit these values as needed.
+
+bootstrap_servers: 'localhost:9092'
+topic: 'numtest'
+# When running in Docker, the Dockerfile copies twitter_validation.csv into /app
+csv_file: 'twitter_validation.csv'
+sleep_seconds: 0.5

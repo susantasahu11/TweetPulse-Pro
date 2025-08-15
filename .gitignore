@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Django
+*.sqlite3
+/media/
+/static/
+/staticfiles/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Build/Dist
+build/
+dist/
+
+# Local data/models (keep model path under versioned dir if needed)
+*.pkl
+*.model
+
+# Docker
+**/.local/
