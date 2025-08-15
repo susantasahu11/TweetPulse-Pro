@@ -7,6 +7,11 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://docker.com)
 [![Performance](https://img.shields.io/badge/Performance-Optimized-00ff41.svg)]()
 [![AI](https://img.shields.io/badge/AI-PySpark%20ML-00cc33.svg)]()
+[![Release](https://img.shields.io/github/v/release/Manula-Fernando/TweetPulse-Pro)](https://github.com/Manula-Fernando/TweetPulse-Pro/releases)
+[![API Image](https://img.shields.io/badge/GHCR-tweetpulse--api-2ea043?logo=github)](https://ghcr.io/manula-fernando/tweetpulse-api)
+[![Producer Image](https://img.shields.io/badge/GHCR-tweetpulse--producer-2ea043?logo=github)](https://ghcr.io/manula-fernando/tweetpulse-producer)
+[![Consumer Image](https://img.shields.io/badge/GHCR-tweetpulse--consumer-2ea043?logo=github)](https://ghcr.io/manula-fernando/tweetpulse-consumer)
+[![Dashboard Image](https://img.shields.io/badge/GHCR-tweetpulse--dashboard-2ea043?logo=github)](https://ghcr.io/manula-fernando/tweetpulse-dashboard)
 
 ## 🎯 Overview
 
