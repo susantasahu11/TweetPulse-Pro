@@ -42,7 +42,7 @@ jobs:
       - name: Build and push API image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: tweetpulse-pipeline
           file: tweetpulse-pipeline/Dockerfile.api
           push: true
           tags: |
@@ -53,7 +53,7 @@ jobs:
       - name: Build and push Producer image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: tweetpulse-pipeline
           file: tweetpulse-pipeline/Dockerfile.producer
           push: true
           tags: |
@@ -64,7 +64,7 @@ jobs:
       - name: Build and push Consumer image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: tweetpulse-pipeline
           file: tweetpulse-pipeline/Dockerfile.consumer
           push: true
           tags: |
